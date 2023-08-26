@@ -1295,6 +1295,26 @@ Manual: Various torrent properties (e.g. save path) must be assigned manually</s
                    </property>
                   </widget>
                  </item>
+                 <item row="4" column="0">
+                  <widget class="QCheckBox" name="checkCustomDownloadPathFormat">
+                   <property name="text">
+                    <string>Use a custom format for download paths:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="1">
+                  <widget class="QLineEdit" name="textCustomDownloadPathFormat">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="toolTip">
+                    <string>TODO help format</string>
+                   </property>
+                   <property name="text">
+                    <string>%(name)/%(hash)</string>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </item>
               </layout>
