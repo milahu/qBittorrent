@@ -143,6 +143,8 @@ void AppController::preferencesAction()
     data[u"export_dir"_s] = session->torrentExportDirectory().toString();
     data[u"export_dir_fin"_s] = session->finishedTorrentExportDirectory().toString();
 
+    // TODO add m_session->customDownloadPathFormat()
+
     // TODO: The following code is deprecated. Delete it once replaced by updated API method.
     // === BEGIN DEPRECATED CODE === //
     TorrentFilesWatcher *fsWatcher = TorrentFilesWatcher::instance();

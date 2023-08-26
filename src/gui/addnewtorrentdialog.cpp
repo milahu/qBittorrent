@@ -674,6 +674,8 @@ void AddNewTorrentDialog::accept()
     m_torrentParams.stopCondition = m_ui->stopConditionComboBox->currentData().value<BitTorrent::Torrent::StopCondition>();
     m_torrentParams.contentLayout = static_cast<BitTorrent::TorrentContentLayout>(m_ui->contentLayoutComboBox->currentIndex());
 
+    // TODO use m_session->customDownloadPathFormat()
+
     m_torrentParams.sequential = m_ui->sequentialCheckBox->isChecked();
     m_torrentParams.firstLastPiecePriority = m_ui->firstLastCheckBox->isChecked();
 
@@ -684,6 +686,7 @@ void AddNewTorrentDialog::accept()
         const int savePathHistoryLength = Preferences::instance()->addNewTorrentDialogSavePathHistoryLength();
         const Path savePath = m_ui->savePath->selectedPath();
         m_torrentParams.savePath = savePath;
+        // TODO use m_session->customDownloadPathFormat()
         updatePathHistory(KEY_SAVEPATHHISTORY, savePath, savePathHistoryLength);
 
         m_torrentParams.useDownloadPath = m_ui->groupBoxDownloadPath->isChecked();
@@ -691,11 +694,13 @@ void AddNewTorrentDialog::accept()
         {
             const Path downloadPath = m_ui->downloadPath->selectedPath();
             m_torrentParams.downloadPath = downloadPath;
+            // TODO use m_session->customDownloadPathFormat()
             updatePathHistory(KEY_DOWNLOADPATHHISTORY, downloadPath, savePathHistoryLength);
         }
         else
         {
             m_torrentParams.downloadPath = Path();
+            // TODO use m_session->customDownloadPathFormat()
         }
     }
     else
@@ -703,6 +708,7 @@ void AddNewTorrentDialog::accept()
         m_torrentParams.savePath = Path();
         m_torrentParams.downloadPath = Path();
         m_torrentParams.useDownloadPath = std::nullopt;
+        // TODO use m_session->customDownloadPathFormat()
     }
 
     setEnabled(!m_ui->checkBoxNeverShow->isChecked());

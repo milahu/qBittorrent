@@ -440,6 +440,7 @@ void TorrentImpl::setSavePath(const Path &path)
 {
     Q_ASSERT(!isAutoTMMEnabled());
 
+    // TODO use m_session->customDownloadPathFormat()
     const Path basePath = m_session->useCategoryPathsInManualMode()
             ? m_session->categorySavePath(category()) : m_session->savePath();
     const Path resolvedPath = (path.isAbsolute() ? path : (basePath / path));
