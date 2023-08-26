@@ -461,6 +461,8 @@ SessionImpl::SessionImpl(QObject *parent)
     , m_isPreallocationEnabled(BITTORRENT_SESSION_KEY(u"Preallocation"_s), false)
     , m_torrentExportDirectory(BITTORRENT_SESSION_KEY(u"TorrentExportDirectory"_s))
     , m_finishedTorrentExportDirectory(BITTORRENT_SESSION_KEY(u"FinishedTorrentExportDirectory"_s))
+    , m_customDownloadPathFormatEnabled(BITTORRENT_SESSION_KEY(u"CustomDownloadPathFormatEnabled"_s))
+    , m_customDownloadPathFormat(BITTORRENT_SESSION_KEY(u"CustomDownloadPathFormat"_s))
     , m_globalDownloadSpeedLimit(BITTORRENT_SESSION_KEY(u"GlobalDLSpeedLimit"_s), 0, lowerLimited(0))
     , m_globalUploadSpeedLimit(BITTORRENT_SESSION_KEY(u"GlobalUPSpeedLimit"_s), 0, lowerLimited(0))
     , m_altGlobalDownloadSpeedLimit(BITTORRENT_SESSION_KEY(u"AlternativeGlobalDLSpeedLimit"_s), 10, lowerLimited(0))
@@ -725,6 +727,28 @@ void SessionImpl::setFinishedTorrentExportDirectory(const Path &path)
 {
     if (path != finishedTorrentExportDirectory())
         m_finishedTorrentExportDirectory = path;
+}
+
+bool SessionImpl::customDownloadPathFormatEnabled() const
+{
+    return m_customDownloadPathFormatEnabled;
+}
+
+void SessionImpl::setCustomDownloadPathFormatEnabled(const bool value)
+{
+    m_customDownloadPathFormatEnabled = value;
+}
+
+QString SessionImpl::customDownloadPathFormat() const
+{
+    return m_customDownloadPathFormat;
+}
+
+void SessionImpl::setCustomDownloadPathFormat(const QString &format)
+{
+    m_customDownloadPathFormat = format;
+    // TODO more? validate the format string?
+    // see also: SessionImpl::setSavePath = "default save path"
 }
 
 Path SessionImpl::savePath() const

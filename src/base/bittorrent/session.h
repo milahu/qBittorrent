@@ -231,6 +231,10 @@ namespace BitTorrent
         virtual void setTorrentExportDirectory(const Path &path) = 0;
         virtual Path finishedTorrentExportDirectory() const = 0;
         virtual void setFinishedTorrentExportDirectory(const Path &path) = 0;
+        virtual bool customDownloadPathFormatEnabled() const = 0;
+        virtual void setCustomDownloadPathFormatEnabled(bool enabled) = 0;
+        virtual QString customDownloadPathFormat() const = 0;
+        virtual void setCustomDownloadPathFormat(const QString &format) = 0;
 
         virtual int globalDownloadSpeedLimit() const = 0;
         virtual void setGlobalDownloadSpeedLimit(int limit) = 0;

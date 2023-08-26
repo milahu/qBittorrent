@@ -569,6 +569,11 @@ void OptionsDialog::loadDownloadsTabOptions()
     if (!isExportDirFinEmpty)
         m_ui->textExportDirFin->setSelectedPath(session->finishedTorrentExportDirectory());
 
+    const bool isCustomDownloadPathFormatEnabled = session->isCustomDownloadPathFormatEnabled();
+    m_ui->checkCustomDownloadPathFormat->setChecked(isCustomDownloadPathFormatEnabled);
+    m_ui->textCustomDownloadPathFormat->setEnabled(isCustomDownloadPathFormatEnabled);
+    m_ui->textCustomDownloadPathFormat->setText(session->getCustomDownloadPathFormat());
+
     auto *watchedFoldersModel = new WatchedFoldersModel(TorrentFilesWatcher::instance(), this);
     connect(watchedFoldersModel, &QAbstractListModel::dataChanged, this, &ThisType::enableApplyButton);
     m_ui->scanFoldersView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -658,6 +663,9 @@ void OptionsDialog::loadDownloadsTabOptions()
     connect(m_ui->checkUseDownloadPath, &QAbstractButton::toggled, this, &ThisType::enableApplyButton);
     connect(m_ui->checkUseDownloadPath, &QAbstractButton::toggled, m_ui->textDownloadPath, &QWidget::setEnabled);
 
+    connect(m_ui->checkCustomDownloadPathFormat, &QAbstractButton::toggled, m_ui->textCustomDownloadPathFormat, &QWidget::setEnabled);
+    connect(m_ui->textCustomDownloadPathFormat, &QLineEdit::textChanged, this, &ThisType::enableApplyButton);
+
     connect(m_ui->addWatchedFolderButton, &QAbstractButton::clicked, this, &ThisType::enableApplyButton);
 
     connect(m_ui->groupExcludedFileNames, &QGroupBox::toggled, this, &ThisType::enableApplyButton);
@@ -717,6 +725,7 @@ void OptionsDialog::saveDownloadsTabOptions() const
     session->setDownloadPath(m_ui->textDownloadPath->selectedPath());
     session->setTorrentExportDirectory(getTorrentExportDir());
     session->setFinishedTorrentExportDirectory(getFinishedTorrentExportDir());
+    session->setCustomDownloadPathFormat(getCustomDownloadPathFormat());
 
     auto *watchedFoldersModel = static_cast<WatchedFoldersModel *>(m_ui->scanFoldersView->model());
     watchedFoldersModel->apply();
@@ -1746,6 +1755,13 @@ Path OptionsDialog::getFinishedTorrentExportDir() const
     if (m_ui->checkExportDirFin->isChecked())
         return m_ui->textExportDirFin->selectedPath();
     return {};
+}
+
+QString OptionsDialog::getCustomDownloadPathFormat() const
+{
+    if (m_ui->checkCustomDownloadPathFormat->isChecked())
+        return m_ui->textCustomDownloadPathFormat->text().trimmed();
+    return "";
 }
 
 void OptionsDialog::on_addWatchedFolderButton_clicked()
